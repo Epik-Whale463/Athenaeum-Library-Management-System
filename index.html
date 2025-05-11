@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athenaeum - Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2280%22>📚</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <h1><i class="fas fa-book-open"></i> Athenaeum</h1>
+                <p>A modern approach to library collection management</p>
+            </div>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#" class="active" data-section="books-section"><i class="fas fa-list"></i> Collection</a></li>
+                <li><a href="#" data-section="add-section"><i class="fas fa-plus"></i> Add Book</a></li>
+                <li><a href="#" data-section="search-section"><i class="fas fa-search"></i> Search</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <!-- Collection Section -->
+            <section id="books-section" class="active-section">
+                <h2>Book Collection</h2>
+                
+                <div class="table-container">
+                    <table id="books-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px">ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th style="width: 150px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="books-list">
+                            <!-- Books will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="books-loading" class="loading">Loading your collection...</div>
+                <div id="books-error" class="error"></div>
+                
+                <div id="empty-collection" class="empty-state hidden">
+                    <i class="fas fa-books"></i>
+                    <h3>Your collection is empty</h3>
+                    <p>Add your first book to get started</p>
+                    <button class="btn primary" id="add-first-book"><i class="fas fa-plus"></i> Add Book</button>
+                </div>
+            </section>
+
+            <!-- Add Book Section -->
+            <section id="add-section">
+                <h2>Add New Book</h2>
+                
+                <div class="card">
+                    <form id="add-book-form">
+                        <div class="form-group">
+                            <label for="book-name">Book Title</label>
+                            <input 
+                                type="text" 
+                                id="book-name" 
+                                name="name" 
+                                required 
+                                placeholder="Enter the title of the book"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="book-author">Author</label>
+                            <input 
+                                type="text" 
+                                id="book-author" 
+                                name="author" 
+                                required 
+                                placeholder="Enter the author's name"
+                                autocomplete="off"
+                            >
+                        </div>
+                        <button type="submit" class="btn primary"><i class="fas fa-plus"></i> Add to Collection</button>
+                    </form>
+                </div>
+                
+                <div id="add-message" class="message"></div>
+            </section>
+
+            <!-- Search Section -->
+            <section id="search-section">
+                <h2>Search Books</h2>
+                
+                <div class="search-container">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search by title or author..." 
+                        autocomplete="off"
+                    >
+                    <button id="search-button" class="btn primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="search-results-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px">ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th style="width: 150px">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="search-results">
+                            <!-- Search results will be loaded here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div id="search-loading" class="loading hidden">Searching library...</div>
+                <div id="search-error" class="error"></div>
+                
+                <div id="no-results" class="empty-state hidden">
+                    <i class="fas fa-search"></i>
+                    <h3>No matching books found</h3>
+                    <p>Try different keywords or browse the full collection</p>
+                </div>
+            </section>
+
+            <!-- Edit Modal -->
+            <div id="edit-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Edit Book</h2>
+                    <form id="edit-book-form">
+                        <input type="hidden" id="edit-book-id">
+                        <div class="form-group">
+                            <label for="edit-book-name">Book Title</label>
+                            <input type="text" id="edit-book-name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-book-author">Author</label>
+                            <input type="text" id="edit-book-author" name="author" required>
+                        </div>
+                        <div id="edit-message" class="message"></div>
+                        <div class="modal-buttons">
+                            <button type="button" class="btn secondary" id="cancel-edit">Cancel</button>
+                            <button type="submit" class="btn primary">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Delete Confirmation Modal -->
+            <div id="delete-modal" class="modal">
+                <div class="modal-content">
+                    <h2>Confirm Deletion</h2>
+                    <p>Are you sure you want to remove this book from your collection?</p>
+                    <div class="book-details" id="delete-book-details"></div>
+                    <div class="modal-buttons">
+                        <button id="cancel-delete" class="btn secondary">Cancel</button>
+                        <button id="confirm-delete" class="btn danger"><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Athenaeum Library Management System | <a href="#">About</a> | <a href="#">Privacy Policy</a></p>
+        </footer>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
