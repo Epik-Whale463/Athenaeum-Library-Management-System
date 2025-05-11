@@ -4,25 +4,10 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 > A modern Java-based library management system with a responsive web frontend
+## UI
+![alt text](image.png)
 
-## 📚 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Architecture](#architecture)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [Database Schema](#database-schema)
-- [UI Components](#ui-components)
-- [Development](#development)
-- [Testing](#testing)
-- [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
-- [Contact](#contact)
+![alt text](image-1.png)
 
 ## 📋 Overview
 
