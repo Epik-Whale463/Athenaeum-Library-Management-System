@@ -447,5 +447,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Project Link: [https://github.com/Epik-Whale463/Athenaeum-Library-Management-System](https://github.com/Epik-Whale463/Athenaeum-Library-Management-System)
 
 ---
-
-*Developed as part of the Cognizant Java Full Stack Engineer training program, May 2025*
